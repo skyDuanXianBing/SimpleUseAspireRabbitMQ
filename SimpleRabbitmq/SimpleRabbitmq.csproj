@@ -5,7 +5,7 @@
         <Nullable>enable</Nullable>
         <OutputType>Library</OutputType>
         <PackageId>SimpleUseAspireRabbitMQ</PackageId>
-        <Version>1.0.0-preview</Version>
+        <Version>1.0.1-preview</Version>
         <Authors>SkYDuan</Authors>
         <Company>SkYDuan</Company>
         <IsPackable>true</IsPackable>
