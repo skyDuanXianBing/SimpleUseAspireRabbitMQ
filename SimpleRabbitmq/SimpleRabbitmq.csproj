@@ -1,0 +1,27 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.Web">
+    <PropertyGroup>
+        <TargetFramework>net8.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+        <OutputType>Library</OutputType>
+        <PackageId>03744689F2EFE6FB5738A7EA27A9DCAC</PackageId>
+        <Version>1.0.0-preview</Version>
+        <Authors>SkYDuan</Authors>
+        <Company>SkYDuan</Company>
+        <IsPackable>true</IsPackable>
+        <PackageReadmeFile>readme.md</PackageReadmeFile>
+    </PropertyGroup>
+    <ItemGroup>
+        <PackageReference Include="Aspire.RabbitMQ.Client"
+                          Version="8.0.0-preview.6.24214.1" />
+        <None Include="../readme.md"
+              Pack="true"
+              PackagePath="\" />
+    </ItemGroup>
+    <PropertyGroup>
+        <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    </PropertyGroup>
+    <PropertyGroup>
+        <RepositoryUrl>https://github.com/your_username/your_project.git</RepositoryUrl>
+    </PropertyGroup>
+</Project>
