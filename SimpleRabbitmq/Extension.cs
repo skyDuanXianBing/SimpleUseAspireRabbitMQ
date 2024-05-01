@@ -6,6 +6,12 @@ namespace SimpleRabbitmq;
 public static class Extension
 {
     internal static string ExchangeName = "aspire_exchange";
+    /// <summary>
+    /// configure rabbitmq event bus
+    /// </summary>
+    /// <param name="webHostBuilder"></param>
+    /// <param name="rabbitmqName">your aspire rabbitmq name</param>
+    /// <param name="rabbitmqExchange">exchange name</param>
     public static void EventConfiguration(this WebApplicationBuilder webHostBuilder,string rabbitmqName,string rabbitmqExchange)
     {
         ExchangeName = rabbitmqName;
@@ -20,7 +26,12 @@ public static class Extension
         });
     }
 
-    public static  async Task RegisterRabbitmqEvent(this WebApplication app)
+    /// <summary>
+    /// register all event handler in the app assemly
+    /// </summary>
+    /// <param name="app"></param>
+    /// <exception cref="Exception"></exception>
+    public static  async void RegisterRabbitmqEvent(this WebApplication app)
     {
         //拿到全部的程序集
         var assemblies = Assembly.GetEntryAssembly();

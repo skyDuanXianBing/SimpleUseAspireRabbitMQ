@@ -4,7 +4,7 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <OutputType>Library</OutputType>
-        <PackageId>03744689F2EFE6FB5738A7EA27A9DCAC</PackageId>
+        <PackageId>SimpleUseAspireRabbitMQ</PackageId>
         <Version>1.0.0-preview</Version>
         <Authors>SkYDuan</Authors>
         <Company>SkYDuan</Company>
@@ -22,6 +22,6 @@
         <PackageLicenseExpression>MIT</PackageLicenseExpression>
     </PropertyGroup>
     <PropertyGroup>
-        <RepositoryUrl>https://github.com/your_username/your_project.git</RepositoryUrl>
+        <RepositoryUrl>https://github.com/skyDuanXianBing/SimpleUseAspireRabbitMQ.git</RepositoryUrl>
     </PropertyGroup>
 </Project>
