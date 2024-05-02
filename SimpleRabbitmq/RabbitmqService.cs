@@ -71,7 +71,7 @@ public class RabbitmqService : IEventBus, IDisposable
         // everything is json 
         var message = Encoding.UTF8.GetString(eventArgs.Body.Span);
         IEventHandler handler;
-        if(handlerType.GetConstructors().Length == 0)
+        if(handlerType.GetConstructors().Length == 1 && handlerType.GetConstructors()[0].GetParameters().Length == 0)
         {
             handler = Activator.CreateInstance(handlerType) as IEventHandler ?? throw new ArgumentException("Handler type is not implement IEventHandler interface");
         }
