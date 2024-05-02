@@ -2,6 +2,9 @@
 
 namespace SimpleRabbitmq.Handler;
 
+/// <summary>
+/// Interface for handling events of type string.
+/// </summary>
 public abstract class IEventStringHandler : IEventHandler
 {
     public Task Handle(string eventName, object eventData)
@@ -11,5 +14,11 @@ public abstract class IEventStringHandler : IEventHandler
         return HandleString(eventName, Data);
     }
 
+    /// <summary>
+    /// Handle the event of type string.
+    /// </summary>
+    /// <param name="eventName">queue name</param>
+    /// <param name="eventData">string data</param>
+    /// <returns></returns>
     public abstract Task HandleString(string eventName, string eventData);
 }

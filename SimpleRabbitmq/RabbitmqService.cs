@@ -11,15 +11,14 @@ public class RabbitmqService : IEventBus, IDisposable
     private readonly IConnection _connection;
     private readonly IModel _channel;
     private readonly string _exchangeName = Extension.ExchangeName;
+    private readonly IServiceProvider _serviceProvider;
 
-    public RabbitmqService(IConnection connection)
+    public RabbitmqService(IConnection connection, IServiceProvider serviceProvider)
     {
-        // 需要重试的操作
         _connection = connection;
         _channel = _connection.CreateModel();
         _channel.ExchangeDeclare(_exchangeName, ExchangeType.Direct);
-
-
+        _serviceProvider = serviceProvider;
     }
 
 
@@ -40,7 +39,7 @@ public class RabbitmqService : IEventBus, IDisposable
         }
 
         var properties = _channel.CreateBasicProperties();
-        properties.DeliveryMode = 2; // 持久化
+        properties.DeliveryMode = 2;
         _channel.QueueDeclare(eventName, durable: true, exclusive: false, autoDelete: false, arguments: null);
         _channel.QueueBind(eventName, _exchangeName, eventName);
         _channel.BasicPublish(_exchangeName, eventName, properties, body);
@@ -58,11 +57,21 @@ public class RabbitmqService : IEventBus, IDisposable
         return Task.CompletedTask;
     }
 
+    /// <summary>
+    /// This method is called when a message is received from RabbitMQ.
+    /// </summary>
+    /// <param name="sender"></param>
+    /// <param name="eventArgs"></param>
+    /// <param name="eventName"></param>
+    /// <param name="handlerType"></param>
+    /// <returns></returns>
+    /// <exception cref="ArgumentException"></exception>
     private async Task Consumer_Received(object sender, BasicDeliverEventArgs eventArgs, string eventName, Type handlerType)
     {
-        //var eventName = eventArgs.RoutingKey;//这个框架中，就是用eventName当RoutingKey
-        var message = Encoding.UTF8.GetString(eventArgs.Body.Span);//框架要求所有的消息都是字符串的json
-        var handler = Activator.CreateInstance(handlerType) as IEventHandler ?? throw new ArgumentException("Handler type is not implement IEventHandler interface");
+        // everything is json 
+        var message = Encoding.UTF8.GetString(eventArgs.Body.Span);
+        // When you create an IEventHandler instance here, if the instance constructor has arguments, you need to pass the corresponding arguments here
+        var handler = Activator.CreateInstance(handlerType, _serviceProvider) as IEventHandler ?? throw new ArgumentException("Handler type is not implement IEventHandler interface");
 
         await handler.Handle(eventName, message);
         _channel.BasicAck(eventArgs.DeliveryTag, false);

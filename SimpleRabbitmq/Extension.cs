@@ -33,11 +33,11 @@ public static class Extension
     /// <exception cref="Exception"></exception>
     public static  async void RegisterRabbitmqEvent(this WebApplication app)
     {
-        //拿到全部的程序集
+        //get all assemblies
         var assemblies = Assembly.GetEntryAssembly();
-        // 查找实现ieventhandl接口的类
+        // find all types that implement IEventHandler
         var types = assemblies?.GetTypes().Where(t => typeof(IEventHandler).IsAssignableFrom(t) && !t.IsAbstract);
-        // 遍历找到对应的事件处理器
+        // foreach type, subscribe to the event bus
        var eventBus =  app.Services.GetRequiredService<IEventBus>();
         foreach (var type in types)
         {
