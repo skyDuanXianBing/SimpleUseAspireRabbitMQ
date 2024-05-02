@@ -81,7 +81,7 @@ public class RabbitmqService : IEventBus, IDisposable
         }
         else
         {
-            throw new ArgumentException("your eventHandler should have one argument which is IServiceProvider or no argument");
+            throw new ArgumentException("your eventHandler should have one Constructors which its parameter only is IServiceProvider or no argument");
         }
   
          
