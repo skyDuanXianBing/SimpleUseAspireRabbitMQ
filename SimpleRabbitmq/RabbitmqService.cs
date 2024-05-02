@@ -70,8 +70,21 @@ public class RabbitmqService : IEventBus, IDisposable
     {
         // everything is json 
         var message = Encoding.UTF8.GetString(eventArgs.Body.Span);
-        // When you create an IEventHandler instance here, if the instance constructor has arguments, you need to pass the corresponding arguments here
-        var handler = Activator.CreateInstance(handlerType, _serviceProvider) as IEventHandler ?? throw new ArgumentException("Handler type is not implement IEventHandler interface");
+        IEventHandler handler;
+        if(handlerType.GetConstructors().Length == 0)
+        {
+            handler = Activator.CreateInstance(handlerType) as IEventHandler ?? throw new ArgumentException("Handler type is not implement IEventHandler interface");
+        }
+        else if(handlerType.GetConstructors().Length == 1 && handlerType.GetConstructors()[0].GetParameters()[0].ParameterType == typeof(IServiceProvider))
+        {
+            handler = Activator.CreateInstance(handlerType, _serviceProvider) as IEventHandler ?? throw new ArgumentException("Handler type is not implement IEventHandler interface");
+        }
+        else
+        {
+            throw new ArgumentException("your eventHandler should have one argument which is IServiceProvider or no argument");
+        }
+  
+         
 
         await handler.Handle(eventName, message);
         _channel.BasicAck(eventArgs.DeliveryTag, false);
