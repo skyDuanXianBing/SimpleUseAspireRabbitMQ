@@ -71,11 +71,11 @@ public class RabbitmqService : IEventBus, IDisposable
         // everything is json 
         var message = Encoding.UTF8.GetString(eventArgs.Body.Span);
         IEventHandler handler;
-        if(handlerType.GetConstructors().Length == 1 && handlerType.GetConstructors()[0].GetParameters().Length == 0)
+        if(handlerType.GetConstructors()[0].GetParameters().Length == 0)
         {
             handler = Activator.CreateInstance(handlerType) as IEventHandler ?? throw new ArgumentException("Handler type is not implement IEventHandler interface");
         }
-        else if(handlerType.GetConstructors().Length == 1 && handlerType.GetConstructors()[0].GetParameters()[0].ParameterType == typeof(IServiceProvider))
+        else if(handlerType.GetConstructors()[0].GetParameters().Length == 1 && handlerType.GetConstructors()[0].GetParameters()[0].ParameterType == typeof(IServiceProvider))
         {
             handler = Activator.CreateInstance(handlerType, _serviceProvider) as IEventHandler ?? throw new ArgumentException("Handler type is not implement IEventHandler interface");
         }
