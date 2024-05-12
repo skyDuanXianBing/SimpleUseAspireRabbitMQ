@@ -5,18 +5,15 @@
         <Nullable>enable</Nullable>
         <OutputType>Library</OutputType>
         <PackageId>SimpleUseAspireRabbitMQ</PackageId>
-        <Version>1.1.3-preview</Version>
+        <Version>1.2.0-preview</Version>
         <Authors>SkYDuan</Authors>
         <Company>SkYDuan</Company>
         <IsPackable>true</IsPackable>
         <PackageReadmeFile>readme.md</PackageReadmeFile>
     </PropertyGroup>
     <ItemGroup>
-        <PackageReference Include="Aspire.RabbitMQ.Client"
-                          Version="8.0.0-preview.6.24214.1" />
-        <None Include="../readme.md"
-              Pack="true"
-              PackagePath="\" />
+        <PackageReference Include="Aspire.RabbitMQ.Client" Version="8.0.0-preview.7.24251.11" />
+        <None Include="../readme.md" Pack="true" PackagePath="\" />
     </ItemGroup>
     <PropertyGroup>
         <PackageLicenseExpression>MIT</PackageLicenseExpression>

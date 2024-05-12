@@ -18,8 +18,8 @@ public static class Extension
         webHostBuilder.Services.AddSingleton<IEventBus, RabbitmqService>();
         webHostBuilder.AddRabbitMQClient(rabbitmqName, (fa) =>
         {
-            fa.HealthChecks = true;
-            fa.Tracing = true;
+            fa.DisableHealthChecks = true;
+            fa.DisableTracing = true;
         }, (f) =>
         {
             f.DispatchConsumersAsync = true;
